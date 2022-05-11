@@ -163,7 +163,7 @@ def productDetails(request,num):
             c.product = p
             c.buyer = b
             c.quantity = int(request.POST.get('q'))
-            c.total = c.product.finalPrice*c.quantity
+            c.total = c.product.finalPrice * c.quantity
             c.save()
             return HttpResponseRedirect('/cart/')
         except:
@@ -270,6 +270,7 @@ def addProduct(request):
         return HttpResponseRedirect('/admin/')
     brand = Brand.objects.all()
     category = Category.objects.all()
+    # sub = SubCategory.objects.all()
     if(request.method=="POST"):
         try:
             s = Seller.objects.get(uname=request.user)
@@ -277,10 +278,11 @@ def addProduct(request):
             p.name=request.POST.get('name')
             p.desc=request.POST.get('description')
             p.basePrice=int(request.POST.get('baseprice'))
-            p.discount=request.POST.get('discount')
-            p.finalPrice = p.basePrice-p.basePrice*int(p.discount)//100
+            p.discount=int(request.POST.get('discount'))
+            p.finalPrice = p.basePrice - (p.basePrice * (p.discount * 0.01))
             p.category=Category.objects.get(name=request.POST.get('category'))
             p.brand=Brand.objects.get(name=request.POST.get('brand'))
+            # p.subcategory=SubCategory.objects.get(name=request.POST.get('subcategory'))
             p.img1 = request.FILES.get('img1')
             p.img2 = request.FILES.get('img2')
             p.img3 = request.FILES.get('img3')
@@ -290,7 +292,7 @@ def addProduct(request):
             return HttpResponseRedirect('/profile/')
         except:
             return HttpResponseRedirect('/')
-    return render(request,"addproduct.html", {"Brand": brand,"Category": category})
+    return render(request,"addproduct.html", {"Brand": brand,"Category": category,})
 
 
 @login_required(login_url='/login/')
@@ -316,8 +318,8 @@ def editProduct(request,num):
         if(not request.POST.get('description')==''):
             p.desc = request.POST.get('description')
         p.basePrice = int(request.POST.get('baseprice'))
-        p.discount = request.POST.get('discount')
-        p.finalPrice = p.basePrice - p.basePrice * int(p.discount) // 100
+        p.discount = int(request.POST.get('discount'))
+        p.finalPrice = p.basePrice - (p.basePrice * (p.discount * 0.01))
         p.category = Category.objects.get(name=request.POST.get('category'))
         p.brand = Brand.objects.get(name=request.POST.get('brand'))
         if(not request.FILES.get('img1')==None):

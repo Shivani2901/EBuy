@@ -7,7 +7,7 @@
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>Add Products</h2>
-						<form  method="post" enctype="multipart/form-data">
+						<form method="post" enctype="multipart/form-data">
 						    {% csrf_token %}
 							<label>Name</label>
 							<input type="text"  name="name" />
@@ -29,6 +29,13 @@
                                <option value="{{i.name}}">{{i.name}}</option>
                                 {% endfor %}
                            </select>
+<!--                            <label>SubCategory</label>-->
+<!--                            <br>-->
+<!--                            <select name="subcategory" class="form-select" >-->
+<!--                               {% for i in SubCategory %}-->
+<!--                               <option value="{{i.name}}">{{i.name}}</option>-->
+<!--                                {% endfor %}-->
+<!--                           </select>-->
                             <label>Image 1</label>
                             <input type="file" name="img1">
                             <label>Image 2</label>

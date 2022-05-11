@@ -79,25 +79,25 @@
 						<form method="post">
                             {% csrf_token %}
                         <ul>
-                            <li>
-                                <div class="form-group size-st">
-                                    <label class="size-label">Size</label>
-                                    <select id="basic" class="selectpicker show-tick form-control">
-									<option value="0">Size</option>
-									<option value="0">S</option>
-									<option value="1">M</option>
-									<option value="1">L</option>
-									<option value="1">XL</option>
-									<option value="1">XXL</option>
-									<option value="1">3XL</option>
-									<option value="1">4XL</option>
-                                    </select>
-                                </div>
-                            </li>
+<!--                            <li>-->
+<!--                                <div class="form-group size-st">-->
+<!--                                    <label class="size-label">Size</label>-->
+<!--                                    <select id="basic" class="selectpicker show-tick form-control">-->
+<!--									<option value="0">Size</option>-->
+<!--									<option value="0">S</option>-->
+<!--									<option value="1">M</option>-->
+<!--									<option value="1">L</option>-->
+<!--									<option value="1">XL</option>-->
+<!--									<option value="1">XXL</option>-->
+<!--									<option value="1">3XL</option>-->
+<!--									<option value="1">4XL</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </li>-->
                             <li>
 								<div class="form-group quantity-box">
 									<label class="control-label">Quantity</label>
-									<input name="q" class="form-control" value="1" min="0" max="20" type="number">
+									<input name="q" class="form-control" value="1" min="1" max="20" type="number">
 								</div>
 							</li>
 
@@ -333,91 +333,5 @@
     </div>
     <!-- End Cart -->
 
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-01.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-02.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-03.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-04.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-05.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-06.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-07.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-08.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-09.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="{% static 'images/instagram-img-05.jpg' %}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Instagram Feed  -->
 
 {% endblock %}

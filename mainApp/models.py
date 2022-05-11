@@ -37,19 +37,19 @@ class Brand(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
         return str(self.id)+" "+self.name
-
-class SubCategory(models.Model):
-    name=models.CharField(max_length=50)
-    category = models.ForeignKey(Category,on_delete=models.CASCADE)
-    def __str__(self):
-        return str(self.id)+" "+self.name
+#
+# class SubCategory(models.Model):
+#     name=models.CharField(max_length=50)
+#     category = models.ForeignKey(Category,on_delete=models.CASCADE)
+#     def __str__(self):
+#         return str(self.id)+" "+self.name
 
 class Product(models.Model):
     stock= models.BooleanField(default=False)
     name = models.CharField(max_length=50)
     desc = models.TextField()
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
-    subcategory=models.ForeignKey(SubCategory,on_delete=models.CASCADE)
+    # subcategory=models.ForeignKey(SubCategory,on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     basePrice = models.IntegerField()
