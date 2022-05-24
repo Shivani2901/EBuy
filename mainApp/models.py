@@ -79,6 +79,7 @@ class Cart(models.Model):
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    size = models.CharField(max_length=10,default=None, null=True, blank=True)
     total = models.IntegerField()
 
     def __str__(self):

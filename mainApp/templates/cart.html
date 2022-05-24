@@ -28,6 +28,7 @@
                                 <tr>
                                     <th>Images</th>
                                     <th>Product Name</th>
+                                    <th>Size</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -47,10 +48,17 @@
                                     {{i.product.name}}
 								</a>
                                     </td>
+                                    <td class="name-pr">
+                                        <a href="#">
+                                    {{i.size}}
+								</a>
+                                    </td>
                                     <td class="price-pr">
                                         <p>{{i.product.finalPrice}}</p>
                                     </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="{{i.quantity}}" min="0" step="1" class="c-input-text qty text">
+                                    <td class="quantity-box">
+                                        <p>{{i.quantity}}</p>
+<!--                                        <input type="number" size="4" value="{{i.quantity}}" min="1" step="1" class="c-input-text qty text">-->
                                     </td>
                                     <td class="total-pr">
                                         <p>Rs {{i.total}}</p>

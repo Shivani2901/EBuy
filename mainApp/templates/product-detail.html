@@ -79,21 +79,30 @@
 						<form method="post">
                             {% csrf_token %}
                         <ul>
-<!--                            <li>-->
-<!--                                <div class="form-group size-st">-->
-<!--                                    <label class="size-label">Size</label>-->
-<!--                                    <select id="basic" class="selectpicker show-tick form-control">-->
-<!--									<option value="0">Size</option>-->
-<!--									<option value="0">S</option>-->
-<!--									<option value="1">M</option>-->
-<!--									<option value="1">L</option>-->
-<!--									<option value="1">XL</option>-->
-<!--									<option value="1">XXL</option>-->
-<!--									<option value="1">3XL</option>-->
-<!--									<option value="1">4XL</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                            </li>-->
+                                {% if Product.size1 or Product.size2 or Product.size3 or Product.size4 or Product.size5 %}
+                                <li>
+                                <div class="form-group size-st">
+                                    <label class="size-label">Size</label>
+                                    <select id="basic" name="size" class="selectpicker show-tick form-control" required>
+                                        {% if Product.size1 %}
+                                        <option value="{{Product.size1}}">{{Product.size1}}</option>
+                                        {% endif %}
+                                        {% if Product.size2 %}
+                                        <option value="{{Product.size2}}">{{Product.size2}}</option>
+                                        {% endif %}
+                                        {% if Product.size3 %}
+                                        <option value="{{Product.size3}}">{{Product.size3}}</option>
+                                        {% endif %}
+                                        {% if Product.size4 %}
+                                        <option value="{{Product.size4}}">{{Product.size4}}</option>
+                                        {% endif %}
+                                        {% if Product.size5 %}
+                                        <option value="{{Product.size5}}">{{Product.size5}}</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </li>
+                            {% endif %}
                             <li>
 								<div class="form-group quantity-box">
 									<label class="control-label">Quantity</label>
@@ -102,7 +111,38 @@
 							</li>
 
 						</ul>
+<!--                                {% if Product.size1 %}-->
+<!--                                <div class="custom-control custom-radio">-->
+<!--                                    <input id="size1" name="size" type="radio" class="custom-control-input" required>-->
+<!--                                    <label class="custom-control-label" for="size1">{{Product.size1}}</label>-->
+<!--                                </div>-->
+<!--<br>                            {% endif %}-->
+<!--                                {% if Product.size2 %}-->
+<!--                                <div class="custom-control custom-radio">-->
+<!--                                    <input id="size2" name="size" type="radio" class="custom-control-input" required>-->
+<!--                                    <label class="custom-control-label" for="size2">{{Product.size2}}</label>-->
+<!--                                </div>-->
+<!--<br>                            {% endif %}-->
+<!--                                {% if Product.size3 %}-->
+<!--                                <div class="custom-control custom-radio">-->
+<!--                                    <input id="size3" name="size" type="radio" class="custom-control-input" required>-->
+<!--                                    <label class="custom-control-label" for="size3">{{Product.size3}}</label>-->
+<!--                                </div>-->
+<!--<br>                            {% endif %}-->
+<!--                                {% if Product.size4 %}-->
+<!--                                <div class="custom-control custom-radio">-->
+<!--                                    <input id="size4" name="size" type="radio" class="custom-control-input" required>-->
+<!--                                    <label class="custom-control-label" for="size4">{{Product.size4}}</label>-->
+<!--                                </div>-->
+<!--<br>                            {% endif %}-->
+<!--                                {% if Product.size5 %}-->
+<!--                                <div class="custom-control custom-radio">-->
+<!--                                    <input id="size5" name="size" type="radio" class="custom-control-input" required>-->
+<!--                                    <label class="custom-control-label" for="size5">{{Product.size5}}</label>-->
+<!--                                </div>-->
+<!--<br>                            {% endif %}-->
 
+                            <br>
 						<div class="price-box-bar">
 							<div class="cart-and-bay-btn">
                                 <button type="submit" class="btn btn-fefault cart">

@@ -95,7 +95,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="/"><img src="{% static 'images/download.png' %}" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
@@ -363,7 +363,7 @@
                             <div class="type-lb">
                                 <p class="sale">Sale</p>
                             </div>
-                            <img src="{{i.img1.url}}" width="150px" height="200px"  alt="Image">
+                            <img src="{{i.img1.url}}" width="200px" height="150px"  alt="Image">
                             <div class="mask-icon">
                                 <ul>
                                     <li><a href="/product/{{i.id}}/" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
@@ -375,7 +375,7 @@
                         </div>
                         <div class="why-text">
                             <h4>{{i.name}}</h4>
-                            <h5>{{i.finalPrice}}</h5>
+                            <h5>Rs. {{i.finalPrice}}</h5>
                         </div>
                     </div>
                 </div>

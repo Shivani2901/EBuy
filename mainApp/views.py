@@ -84,8 +84,9 @@ def checkoutDetails(request):
             ch.mode = request.POST.get('option')
             ch.notes = request.POST.get('message')
             ch.save()
-            c.delete()
+
             return HttpResponseRedirect('/confirm/')
+
         return render(request, "checkout.html", {
             "user": user, "cart": c ,"Sub": subtotal, "Delievery": delievery, "Final": finalAmount})
 
@@ -202,6 +203,7 @@ def productDetails(request,num):
             b = Buyer.objects.get(uname=request.user)
             c.product = p
             c.buyer = b
+            c.size = request.POST.get('size')
             c.quantity = int(request.POST.get('q'))
             c.total = c.product.finalPrice * c.quantity
             c.save()
@@ -397,6 +399,11 @@ def addProduct(request):
             p.category=Category.objects.get(name=request.POST.get('category'))
             p.brand=Brand.objects.get(name=request.POST.get('brand'))
             # p.subcategory=SubCategory.objects.get(name=request.POST.get('subcategory'))
+            p.size1 = request.POST.get('size1')
+            p.size2 = request.POST.get('size2')
+            p.size3 = request.POST.get('size3')
+            p.size4 = request.POST.get('size4')
+            p.size5 = request.POST.get('size5')
             p.img1 = request.FILES.get('img1')
             p.img2 = request.FILES.get('img2')
             p.img3 = request.FILES.get('img3')
@@ -436,6 +443,16 @@ def editProduct(request,num):
         p.finalPrice = p.basePrice - (p.basePrice * (p.discount * 0.01))
         p.category = Category.objects.get(name=request.POST.get('category'))
         p.brand = Brand.objects.get(name=request.POST.get('brand'))
+        if (not request.POST.get('size1') == None):
+            p.size1 = request.POST.get('size1')
+        if (not request.POST.get('size2') == None):
+            p.size2 = request.POST.get('size2')
+        if (not request.POST.get('size3') == None):
+            p.size3 = request.POST.get('size3')
+        if (not request.POST.get('size4') == None):
+            p.size4 = request.POST.get('size4')
+        if (not request.POST.get('size5') == None):
+            p.size5 = request.POST.get('size5')
         if(not request.FILES.get('img1')==None):
             p.img1 = request.FILES.get('img1')
         if (not request.FILES.get('img2') == None):
