@@ -9,5 +9,7 @@ admin.site.register(Brand)
 admin.site.register(Product)
 admin.site.register(Cart)
 admin.site.register(Checkout)
+admin.site.register(Contact)
+admin.site.register(Profile)
 
 

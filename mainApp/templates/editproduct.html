@@ -6,29 +6,43 @@
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
-						<h2>Edit Products</h2>
+                        <br>
+						<h1 style="color:green;text-align:center;font-weight: bold;">Edit Products</h1>
+                        <hr>
 						<form  method="post" enctype="multipart/form-data">
 						    {% csrf_token %}
+                            <div class="form-group">
 							<label>Name</label>
-							<input type="text"  name="name" value="{{Product.name}}"/>
+							<input type="text"  class="form-control"  name="name" value="{{Product.name}}"/>
+                            </div>
+                            <div class="form-group">
 							<label>Description</label>
-                            <textarea name="description" ></textarea>
+                            <textarea name="description"  class="form-control" ></textarea>
+                            </div>
+                            <div class="form-group">
 							<label>Base Price</label>
-							<input type="number"  name="baseprice" value="{{Product.basePrice}}"/>
+							<input type="number"  class="form-control" name="baseprice" value="{{Product.basePrice}}"/>
+                            </div>
+                            <div class="form-group">
 							<label>Discount</label>
-                            <input type="number"  name="discount" value="{{Product.discount}}" />
-                            <label>Brand</label>
-                           <select name="brand" class="form-select" >
+                            <input type="number"  class="form-control" name="discount" value="{{Product.discount}}" />
+                            </div>
+                            <div class="form-group">
+                            <label>Brand</label> <br>
+                           <select name="brand"  class="btn btn-info dropdown-toggle" >
                                {% for i in Brand %}
                                <option value="{{i.name}}">{{i.name}}</option>
                                {% endfor %}
                            </select>
-                            <label>Category</label>
-                            <select name="category" class="form-select" >
+                            </div>
+                            <div class="form-group">
+                            <label>Category</label> <br>
+                            <select name="category" class="btn btn-info dropdown-toggle" >
                                {% for i in Category %}
                                <option value="{{i.name}}">{{i.name}}</option>
                                 {% endfor %}
                            </select>
+                            </div>
                             <label>Image 1</label>
                             <input type="file" name="img1">
                             <label>Image 2</label>
@@ -37,12 +51,60 @@
                             <input type="file" name="img3">
                             <label>Image 4</label>
                             <input type="file" name="img4">
-                            <button type="submit" class="btn btn-default">Edit Product</button>
+                            <br> <br>
+                            <button type="submit" class="btn btn-success">Edit Product</button>
 						</form>
 					</div><!--/sign up form-->
 				</div>
 			</div>
 		</div>
 	</section><!--/form-->
+<br>
 
 {% endblock %}
+
+
+<!--<section id="form">&lt;!&ndash;form&ndash;&gt;-->
+<!--		<div class="container">-->
+<!--			<div class="row">-->
+<!--				<div class="col-sm-4">-->
+<!--					<div class="signup-form">&lt;!&ndash;sign up form&ndash;&gt;-->
+<!--						<h2>Edit Products</h2>-->
+<!--						<form  method="post" enctype="multipart/form-data">-->
+<!--						    {% csrf_token %}-->
+<!--							<label>Name</label>-->
+<!--							<input type="text"  name="name" value="{{Product.name}}"/>-->
+<!--							<label>Description</label>-->
+<!--                            <textarea name="description" ></textarea>-->
+<!--							<label>Base Price</label>-->
+<!--							<input type="number"  name="baseprice" value="{{Product.basePrice}}"/>-->
+<!--							<label>Discount</label>-->
+<!--                            <input type="number"  name="discount" value="{{Product.discount}}" />-->
+<!--                            <label>Brand</label>-->
+<!--                           <select name="brand" class="form-select" >-->
+<!--                               {% for i in Brand %}-->
+<!--                               <option value="{{i.name}}">{{i.name}}</option>-->
+<!--                               {% endfor %}-->
+<!--                           </select>-->
+<!--                            <label>Category</label>-->
+<!--                            <select name="category" class="form-select" >-->
+<!--                               {% for i in Category %}-->
+<!--                               <option value="{{i.name}}">{{i.name}}</option>-->
+<!--                                {% endfor %}-->
+<!--                           </select>-->
+<!--                            <label>Image 1</label>-->
+<!--                            <input type="file" name="img1">-->
+<!--                            <label>Image 2</label>-->
+<!--                            <input type="file" name="img2">-->
+<!--                            <label>Image 3</label>-->
+<!--                            <input type="file" name="img3">-->
+<!--                            <label>Image 4</label>-->
+<!--                            <input type="file" name="img4">-->
+<!--                            <button type="submit" class="btn btn-default">Edit Product</button>-->
+<!--						</form>-->
+<!--					</div>&lt;!&ndash;/sign up form&ndash;&gt;-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</section>&lt;!&ndash;/form&ndash;&gt;-->
+

@@ -1,7 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+class Profile(models.Model):
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
+    email_token =models.CharField(max_length=200)
+    is_verified =models.BooleanField(default=False)
 
 class Seller(models.Model):
-    name=models.CharField(max_length=20)
+    name=models.CharField(max_length=50)
     uname=models.CharField(max_length=20)
     email=models.EmailField(default=None,null=True,blank=True)
     phone=models.CharField(max_length=20,default=None,null=True,blank=True)
@@ -14,15 +20,15 @@ class Seller(models.Model):
         return str(self.id)+" "+self.name
 
 class Buyer(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     uname = models.CharField(max_length=20)
     email = models.EmailField(default=None, null=True, blank=True)
-    phone = models.CharField(default=None,null=True, max_length=20, blank=True)
-    address1 = models.CharField(max_length=20, default=None, null=True, blank=True)
-    address2 = models.CharField(max_length=20, default=None, null=True, blank=True)
-    city = models.CharField(max_length=20, default=None, null=True, blank=True)
-    state = models.CharField(max_length=20, default=None, null=True, blank=True)
-    pin = models.CharField(max_length=20, default=None, null=True, blank=True)
+    phone = models.CharField(max_length=20)
+    address1 = models.CharField(max_length=20)
+    address2 = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    state = models.CharField(max_length=20)
+    pin = models.CharField(max_length=20)
 
     def __str__(self):
         return str(self.id)+" "+self.name
@@ -46,7 +52,7 @@ class Brand(models.Model):
 
 class Product(models.Model):
     stock= models.BooleanField(default=False)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
     desc = models.TextField()
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     # subcategory=models.ForeignKey(SubCategory,on_delete=models.CASCADE)
@@ -55,6 +61,11 @@ class Product(models.Model):
     basePrice = models.IntegerField()
     discount = models.IntegerField(default=0, null=True, blank=True)
     finalPrice = models.IntegerField(default=0, null=True, blank=True)
+    size1 = models.CharField(max_length=10,default=None, null=True, blank=True)
+    size2 = models.CharField(max_length=10,default=None, null=True, blank=True)
+    size3 = models.CharField(max_length=10,default=None, null=True, blank=True)
+    size4 = models.CharField(max_length=10,default=None, null=True, blank=True)
+    size5 = models.CharField(max_length=10,default=None, null=True, blank=True)
     img1 = models.ImageField(upload_to='images/', default=None, blank=True, null=True)
     img2 = models.ImageField(upload_to='images/', default=None, blank=True, null=True)
     img3 = models.ImageField(upload_to='images/', default=None, blank=True, null=True)
@@ -76,11 +87,11 @@ class Cart(models.Model):
 class Checkout(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     total = models.IntegerField()
-    address1 = models.CharField(max_length=20)
-    name = models.CharField(max_length=20, default=None)
-    phone = models.CharField(max_length=20, default=None)
-    email = models.CharField(max_length=20, default=None)
-    address2 = models.CharField(max_length=20)
+    address1 = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default=None)
+    phone = models.CharField(max_length=15, default=None)
+    email = models.CharField(max_length=50, default=None)
+    address2 = models.CharField(max_length=50)
     city = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
     pin = models.CharField(max_length=20)

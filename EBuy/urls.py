@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from mainApp import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,6 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home),
+    path('verify/<str:token>/', views.verify),
+    path('sign/', views.sign),
     path('cart/',views.cartDetails),
     path('checkout/',views.checkoutDetails),
     path('contact/',views.contactDetails),
@@ -41,4 +43,9 @@ urlpatterns = [
     path('editproduct/<int:num>/', views.editProduct),
     path('deletecart/<int:num>/', views.deletecart),
     path('confirm/', views.confirm),
+    path('note/', views.note),
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    # path('payment-done/', views.payment_done),
+    # path('payment_canceled/', views.payment_canceled),
+    # path('process-payment/', views.process_payment),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

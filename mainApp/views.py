@@ -1,5 +1,11 @@
+import uuid
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
+from django.urls import reverse
+from django.conf import settings
+from .utils import *
 from .models import *
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
@@ -78,13 +84,42 @@ def checkoutDetails(request):
             ch.mode = request.POST.get('option')
             ch.notes = request.POST.get('message')
             ch.save()
-
+            c.delete()
             return HttpResponseRedirect('/confirm/')
         return render(request, "checkout.html", {
             "user": user, "cart": c ,"Sub": subtotal, "Delievery": delievery, "Final": finalAmount})
 
+# @login_required(login_url='/login/')
+# def process_payment(request):
+#     order_id ='23'
+#     host = request.get_host()
+#     paypal_dict = {
+#         'business': settings.PAYPAL_RECEIVER_EMAIL,
+#         'amount': '200',
+#         'item_name': 'Item Nameee',
+#         'invoice': 'INV-23',
+#         'currency_code': 'INR',
+#         'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),
+#         'return_url': 'http://{}{}'.format(host,reverse('paypal_done')),
+#         'cancel_return': 'http://{}{}'.format(host,reverse('paypal_cancelled')),
+#     }
+#     form = PayPalPaymentsForm(initial=paypal_dict)
+#     return render(request, 'process-payment.html', {'form': form})
+#
+# @csrf_exempt
+# def payment_done(request):
+#     returnData =request.POST
+#     return render(request, "payment-success.html", {'data': returnData})
+#
+# @csrf_exempt
+# def payment_canceled(request):
+#     return render(request, "payment-fail.html")
+
 def confirm(request):
     return render(request, "confirm.html")
+
+def sign(request):
+    return render(request, "register.html")
 
 def contactDetails(request):
     if(request.method=="POST"):
@@ -143,9 +178,14 @@ def loginDetails(request):
         uname = request.POST.get('uname')
         pward = request.POST.get('password')
         user = auth.authenticate(username=uname, password=pward)
+        user_ob = User.objects.get(username = uname)
+        p = Profile.objects.get(user = user_ob)
         if(user is not None):
-            auth.login(request, user)
-            return HttpResponseRedirect('/profile/')
+            if(p.is_verified == True):
+                auth.login(request, user)
+                return HttpResponseRedirect('/profile/')
+            else:
+                messages.error(request,"Email not Verified")
         else:
             messages.error(request, "Invalid User Name or Password")
     return render(request, "login.html")
@@ -184,47 +224,121 @@ def shopDetails(request,cat):
 def myAccount(request):
     return render(request,"my-account.html")
 
-def signUp(request):
-    return render(request,"register.html")
+def note(request):
+    return render(request,"note.html")
+#
+# def signUp(request):
+#     if request.method == "POST" :
+#         email = request.POST.get('email')
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user_obj =User(username = username)
+#         user_obj.set_password(password)
+#         user_obj.save()
+#         p_obj = Profile.objects.create(
+#             user = user_obj,
+#             email_token = str(uuid.uuid4())
+#         )
+#         send_email_token(email, p_obj.email_token)
+#     return render(request,"register.html")
+
+def verify(request, token):
+    try:
+        obj =Profile.objects.get(email_token = token)
+        obj.is_verified = True
+        obj.save()
+        messages.success(request, "Your account verified!!")
+        return HttpResponseRedirect('/login/')
+        # return HttpResponse('Your account verified')
+    except Exception as e:
+        return HttpResponse('Invalid token')
 
 def registerDetails(request):
     choice = request.POST.get('option')
     if(choice=="seller"):
+
         s = Seller()
         s.name = request.POST.get('name')
         s.uname = request.POST.get('username')
         s.email = request.POST.get('email')
         pward = request.POST.get('password')
-        try:
-            user= User.objects.create_user(username=s.uname,
-                                       email=s.email,
-                                       password=pward)
-            # user = User.objects.create_user(s.name,
-            #                              s.email,
-            #                              pward)
-            # user = User.objects.create_user('abc',
-            #                                 'abc@gmail.com',
-            #                                 'abracadabre')
-            s.save()
-            messages.success(request, "Account created please Login!!")
-            return HttpResponseRedirect('/login/')
-        except:
+        if User.objects.filter(username = s.uname).first():
             messages.error(request, "User Already Exist")
-            return render(request,"register.html")
+            return render(request, "register.html")
+        else:
+            user_obj = User(username=s.uname)
+            user_obj.set_password(pward)
+            user_obj.save()
+            p_obj = Profile.objects.create(
+                user=user_obj,
+                email_token=str(uuid.uuid4())
+            )
+            send_email_token(s.email, p_obj.email_token)
+            s.save()
+            return render(request, "note.html")
+        # try:
+        #     user_obj = User(username=s.uname)
+        #     user_obj.set_password(pward)
+        #     user_obj.save()
+        #     p_obj = Profile.objects.create(
+        #         user=user_obj,
+        #         email_token=str(uuid.uuid4())
+        #     )
+        #     send_email_token(s.email, p_obj.email_token)
+        #     s.save()
+        #     return render(request, "note.html")
+        # except Exception as e:
+        #     messages.error(request, "User Already Exist")
+        #     return render(request, "register.html")
+
+        # user= User.objects.create_user(username=s.uname,
+        #                            email=s.email,
+        #                            password=pward)
+        # user = User.objects.create_user(s.name,
+        #                              s.email,
+        #                              pward)
+        # user = User.objects.create_user('abc',
+        #                                 'abc@gmail.com',
+        #                                 'abracadabre')
+
+        # messages.success(request, "Account created please Login!!")
     else:
         b=Buyer()
         b.name = request.POST.get('name')
         b.uname = request.POST.get('username')
         b.email = request.POST.get('email')
         pward = request.POST.get('password')
-        try:
-            user = User.objects.create_user(username=b.uname,email=b.email,password=pward)
-            b.save()
-            messages.success(request, "Account created please Login!!")
-            return HttpResponseRedirect('/login/')
-        except:
+        if User.objects.filter(username = b.uname).first():
             messages.error(request, "User Already Exist")
-            return render(request,"register.html")
+            return render(request, "register.html")
+        else:
+            user_obj = User(username=b.uname)
+            user_obj.set_password(pward)
+            user_obj.save()
+            p_obj = Profile.objects.create(
+                user=user_obj,
+                email_token=str(uuid.uuid4())
+            )
+            send_email_token(b.email, p_obj.email_token)
+            b.save()
+            return render(request, "note.html")
+        # try:
+        #     user_obj = User(username=b.uname)
+        #     user_obj.set_password(pward)
+        #     user_obj.save()
+        #     p_obj = Profile.objects.create(
+        #         user=user_obj,
+        #         email_token=str(uuid.uuid4())
+        #     )
+        #     send_email_token(b.email, p_obj.email_token)
+        #     b.save()
+        #     return render(request, "note.html")
+        #     # user = User.objects.create_user(username=b.uname,email=b.email,password=pward)
+        #
+        #     # messages.success(request, "Account created please Login!!")
+        # except:
+        #     messages.error(request, "User Already Exist")
+        #     return render(request,"register.html")
 
 
 @login_required(login_url='/login/')
