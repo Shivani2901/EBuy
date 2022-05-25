@@ -19,6 +19,7 @@
 
     <!-- Start Wishlist  -->
     <div class="wishlist-box-main">
+         {% if Wish %}
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -48,7 +49,7 @@
 								</a>
                                     </td>
                                     <td class="price-pr">
-                                        <p>Rs {{i.product.basePrice}}</p>
+                                        <p>Rs. {{i.product.basePrice}}</p>
                                     </td>
                                     <td class="quantity-box">In Stock</td>
                                     <td class="add-pr">
@@ -67,6 +68,20 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
+{% if not Wish %}
+<div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+
+        <h2 style="text-align: center;font-size:26px;margin-left:40%; padding:10px;background-color:grey;"> Your Wishlist's Empty
+        <p><a class="btn hvr-hover " href="/shop/default/">Shop Now</a></p></h2>
+                </div>
+            </div>
+</div>
+        {% endif %}
+<br>
+<br><br><br>
     <!-- End Wishlist -->
 {% endblock %}

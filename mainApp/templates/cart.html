@@ -19,6 +19,7 @@
 
     <!-- Start Cart  -->
     <div class="cart-box-main">
+        {% if Cart %}
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -48,20 +49,29 @@
                                     {{i.product.name}}
 								</a>
                                     </td>
+                                    {% if i.size %}
                                     <td class="name-pr">
                                         <a href="#">
-                                    {{i.size}}
+                                            {{i.size}}
 								</a>
                                     </td>
+                                    {% endif %}
+                                    {% if not i.size %}
+                                    <td class="name-pr">
+                                        <a href="#">
+                                            ---
+								</a>
+                                    </td>
+                                    {% endif %}
                                     <td class="price-pr">
-                                        <p>{{i.product.finalPrice}}</p>
+                                        <p>Rs. {{i.product.finalPrice}}</p>
                                     </td>
                                     <td class="quantity-box">
                                         <p>{{i.quantity}}</p>
 <!--                                        <input type="number" size="4" value="{{i.quantity}}" min="1" step="1" class="c-input-text qty text">-->
                                     </td>
                                     <td class="total-pr">
-                                        <p>Rs {{i.total}}</p>
+                                        <p>Rs. {{i.total}}</p>
                                     </td>
                                     <td class="remove-pr">
                                         <a href="/deletecart/{{i.id}}/">
@@ -101,7 +111,7 @@
                         <h3>Order summary</h3>
                         <div class="d-flex">
                             <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold">Rs {{Sub}}</div>
+                            <div class="ml-auto font-weight-bold">Rs. {{Sub}}</div>
                         </div>
 <!--                        <div class="d-flex">-->
 <!--                            <h4>Discount</h4>-->
@@ -119,7 +129,7 @@
                         <div class="d-flex">
                             <h4>Shipping Cost</h4>
                             {% if Delievery %}
-                            <div class="ml-auto font-weight-bold">Rs {{Delievery}}</div>
+                            <div class="ml-auto font-weight-bold">Rs. {{Delievery}}</div>
                             {% else %}
                             <div class="ml-auto font-weight-bold"> Free </div>
                             {% endif %}
@@ -127,7 +137,7 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5">Rs {{Final}}</div>
+                            <div class="ml-auto h5">Rs. {{Final}}</div>
                         </div>
                         <hr>
                     </div>
@@ -136,7 +146,21 @@
             </div>
 
         </div>
-    </div>
+        {% endif %}
+        </div>
+        {% if not Cart %}
+<div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+
+        <h2 style="text-align: center;font-size:26px;margin-left:40%; padding:10px;background-color:grey;"> Your Cart's Empty
+        <p><a class="btn hvr-hover " href="/shop/default/">Shop Now</a></p></h2>
+                </div>
+            </div>
+</div>
+        {% endif %}
+<br>
+<br><br><br>
     <!-- End Cart -->
 
     {% endblock %}
