@@ -86,8 +86,12 @@ class Cart(models.Model):
         return str(self.id)+" "+self.buyer.name
 
 class Checkout(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    total = models.IntegerField()
+    # cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, default=None)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
+    quantity = models.IntegerField(default=None)
+    size = models.CharField(max_length=10, default=None, null=True, blank=True)
+    total = models.IntegerField(default=None)
     address1 = models.CharField(max_length=50)
     name = models.CharField(max_length=50, default=None)
     phone = models.CharField(max_length=15, default=None)

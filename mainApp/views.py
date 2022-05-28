@@ -1,10 +1,6 @@
 import uuid
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
-from paypal.standard.forms import PayPalPaymentsForm
-from django.urls import reverse
-from django.conf import settings
 from .utils import *
 from .models import *
 from django.contrib import auth, messages
@@ -68,53 +64,37 @@ def checkoutDetails(request):
             delievery = 0
         finalAmount = subtotal + delievery
         if (request.method == "POST"):
-            ch = Checkout()
-            ch.user = user
-            ch.address1 = request.POST.get('address1')
-            ch.address2 = request.POST.get('address2')
-            ch.city = request.POST.get('city')
-            ch.state = request.POST.get('state')
-            ch.pin = request.POST.get('pin')
-            ch.name = request.POST.get('name')
-            ch.email = request.POST.get('email')
-            ch.phone = request.POST.get('phone')
             cart = Cart.objects.filter(buyer=user)
-            ch.cart = cart[0]
-            ch.total = cart[0].total
-            ch.mode = request.POST.get('option')
-            ch.notes = request.POST.get('message')
-            ch.save()
-
+            # author = Blog.objects.filter(author=author)
+            # ids = cart.values_list('pk', flat=True)
+            # list method get ids without parse the returning queryset
+            # print(list(ids))
+            for j in cart:
+                ch = Checkout()
+                ch.user = user
+                ch.product = j.product
+                ch.buyer = j.buyer
+                ch.size = j.size
+                ch.quantity = j.quantity
+                ch.total = j.total
+                ch.address1 = request.POST.get('address1')
+                ch.address2 = request.POST.get('address2')
+                ch.city = request.POST.get('city')
+                ch.state = request.POST.get('state')
+                ch.pin = request.POST.get('pin')
+                ch.name = request.POST.get('name')
+                ch.email = request.POST.get('email')
+                ch.phone = request.POST.get('phone')
+                ch.mode = request.POST.get('option')
+                ch.notes = request.POST.get('message')
+                ch.save()
+                # temp = Cart.objects.get(id=ids())
+                # ch.cart = temp
+                # ch.total = temp.total
+            cart.delete()
             return HttpResponseRedirect('/confirm/')
-
         return render(request, "checkout.html", {
             "user": user, "cart": c ,"Sub": subtotal, "Delievery": delievery, "Final": finalAmount})
-
-# @login_required(login_url='/login/')
-# def process_payment(request):
-#     order_id ='23'
-#     host = request.get_host()
-#     paypal_dict = {
-#         'business': settings.PAYPAL_RECEIVER_EMAIL,
-#         'amount': '200',
-#         'item_name': 'Item Nameee',
-#         'invoice': 'INV-23',
-#         'currency_code': 'INR',
-#         'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),
-#         'return_url': 'http://{}{}'.format(host,reverse('paypal_done')),
-#         'cancel_return': 'http://{}{}'.format(host,reverse('paypal_cancelled')),
-#     }
-#     form = PayPalPaymentsForm(initial=paypal_dict)
-#     return render(request, 'process-payment.html', {'form': form})
-#
-# @csrf_exempt
-# def payment_done(request):
-#     returnData =request.POST
-#     return render(request, "payment-success.html", {'data': returnData})
-#
-# @csrf_exempt
-# def payment_canceled(request):
-#     return render(request, "payment-fail.html")
 
 def confirm(request):
     return render(request, "confirm.html")
